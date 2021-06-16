@@ -1,0 +1,114 @@
+<span [ngClass]="{'ui-calendar':true}" style="width: 100%;">
+  <input #inputfield type="text" [attr.required]="required"
+    [attr.aria-required]="required" [value]="inputFieldValue" (focus)="inputFocus($event)"
+    (click)="inputClick()" (blur)="inputBlur($event)" [readonly]="readonlyInput"
+    [class]="inputStyleClass" placeholder="期間(終点)を選択"
+    [attr.tabindex]="tabindex"
+    [ngClass]="'ui-inputtext ui-widget ui-state-default ui-corner-all'" autocomplete="off">
+  <div #contentWrapper [class]="panelStyleClass" [ngStyle]="panelStyle"
+    [ngClass]="{'ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all ui-shadow': true,
+        'ui-state-disabled':disabled,'ui-datepicker-multiple-month': this.numberOfMonths > 1}"
+    [@overlayAnimation]="{value: 'visible', params: {showTransitionParams: showTransitionOptions, hideTransitionParams: hideTransitionOptions}}"
+    (@overlayAnimation.start)="onOverlayAnimationStart($event)"
+    (@overlayAnimation.done)="onOverlayAnimationDone($event)" *ngIf="overlayVisible">
+      <div class="ui-datepicker-group ui-widget-content" *ngFor="let month of months; let i = index;">
+        <div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
+          <a class="ui-datepicker-prev ui-corner-all arrow-left" (click)="onPrevButtonClick($event)"
+            *ngIf="i === 0" tabindex="0">
+            <span class="ui-datepicker-prev-icon pi pi-chevron-left"></span>
+          </a>
+          <div class="ui-datepicker-title">
+            <select tabindex="0" class="ui-datepicker-year"
+              (change)="onYearDropdownChange($event.target.value)">
+              <option [value]="year" *ngFor="let year of yearOptions" [selected]="year === currentYear">{{year}}
+              </option>
+            </select>
+            <ng-container *ngIf="unit === '1週間'">
+              /
+              <select tabindex="0" class="ui-datepicker-month"
+                (change)="onMonthDropdownChange($event.target.value)">
+                <option [value]="i" *ngFor="let monthName of locale.monthNames;let i = index"
+                  [selected]="i === month.month">{{monthName}}</option>
+              </select>
+            </ng-container>
+          </div>
+          <a class="ui-datepicker-next ui-corner-all arrow-right" (click)="onNextButtonClick($event)"
+            *ngIf="numberOfMonths === 1 ? true : (i === numberOfMonths -1)"
+            tabindex="0">
+            <span class="ui-datepicker-next-icon pi pi-chevron-right"></span>
+          </a>
+        </div>
+        <div class="ui-datepicker-calendar-container" *ngIf="unit !== '6ヵ月'">
+          <table class="ui-datepicker-calendar">
+            <thead class="thead">
+              <tr>
+                <ng-container *ngIf="unit === '8週間'">
+                  <th class="ui-datepicker-weekheader">
+                    <span>{{locale['weekHeader']}}</span>
+                  </th>
+                  <th class="ui-datepicker-weekheader">
+                    <span>{{locale['startDate']}}</span>
+                  </th>
+                  <th class="ui-datepicker-weekheader">
+                    <span>{{locale['endDate']}}</span>
+                  </th>
+                </ng-container>
+                <ng-container *ngIf="unit === '1週間'">
+                  <th scope="col"
+                    *ngFor="let weekDay of weekDays;let begin = first; let end = last; let i = index"
+                    [ngClass]="{'blue': i==5, 'red': end}">
+                    <span>{{weekDay}}</span>
+                  </th>
+                </ng-container>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="unit === '1週間'">
+                <tr *ngFor="let week of month.dates; let j = index;">
+                  <td *ngFor="let date of week;let begin = first; let end = last; let i = index"
+                    [ngClass]="{'ui-datepicker-other-month': date.otherMonth,
+                    'ui-datepicker-current-day':isSelected(date,week),'ui-datepicker-today':date.today,
+                    'blue': i==5, 'red': end}">
+                    <ng-container *ngIf="date.otherMonth ? showOtherMonths : true">
+                      <a class="ui-state-default"
+                        [ngClass]="{'ui-state-active':isSelected(date, week),
+                          'ui-state-highlight':date.today,
+                          'ui-state-disabled':date.otherMonth}"
+                        (click)="oneWeekSelect($event,date,week)" draggable="false">
+                        <ng-container *ngIf="!dateTemplate">{{date.day}}</ng-container>
+                        <ng-container *ngTemplateOutlet="dateTemplate; context: {$implicit: date}"></ng-container>
+                      </a>
+                    </ng-container>
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="unit === '8週間'">
+                <tr *ngFor="let week of weeks; let i = index" (click)="eightWeekSelect($event,week,weeks)">
+                  <td><a class="ui-state-default" [ngClass]="{'ui-state-active': isSelected(week.endDate,week,weeks)}">{{week.no}}</a></td>
+                  <td><a class="ui-state-default" [ngClass]="{'ui-state-active-date': isSelected(week.endDate,week,weeks)}">{{week.startDate}}</a></td>
+                  <td><a class="ui-state-default" [ngClass]="{'ui-state-active-date': isSelected(week.endDate,week,weeks)}">{{week.endDate}}</a></td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="ui-monthpicker" *ngIf="unit === '6ヵ月'">
+        <div class="ui-monthpicker-month-div" *ngFor="let m of monthPickerValues; let i = index"
+        [ngClass]="{
+          'ui-border-month': i===1 || i===4 || i===7 || i===10
+        }">
+          <a (click)="sixMonthSelect($event, m)"
+            class="ui-monthpicker-month"
+            [ngClass]="{
+              'ui-state-active': isMonthSelected(i, currentYear)
+            }">
+            {{m}}
+          </a>
+        </div>
+      </div>
+    <footer class="footer">
+      <button class="c-Btn__help" (click)="okClick()">OK</button>
+    </footer>
+  </div>
+</span>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="16" viewBox="0 0 28 16">
+  <g id="car_mileage" transform="translate(-967 -183)">
+    <path id="パス_44" data-name="パス 44" d="M16.49,15.5V13.75L14,16.25l2.49,2.5V17H22V15.5Zm3.02,4.25H14v1.5h5.51V23L22,20.5,19.51,18Z" transform="translate(973 172)" />
+    <g id="グループ_39" data-name="グループ 39" transform="translate(-1984 -1035)">
+      <path id="パス_12" data-name="パス 12" d="M18.92,6.01A1.494,1.494,0,0,0,17.5,5H6.5A1.5,1.5,0,0,0,5.08,6.01L3,12v8a1,1,0,0,0,1,1H5a1,1,0,0,0,1-1V19H18v1a1,1,0,0,0,1,1h1a1,1,0,0,0,1-1V12ZM6.85,7H17.14l1.08,3.11H5.77ZM19,17H5V12H19Z" transform="translate(2948 1213)" />
+      <circle id="楕円形_2" data-name="楕円形 2" cx="1.5" cy="1.5" r="1.5" transform="translate(2954 1226)" />
+      <circle id="楕円形_3" data-name="楕円形 3" cx="1.5" cy="1.5" r="1.5" transform="translate(2963 1226)" />
+    </g>
+  </g>
+</svg>
+R

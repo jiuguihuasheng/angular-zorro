@@ -1,0 +1,29 @@
+<div class="c-Modal-wrap" *ngIf="modalDisp" style="z-index: 20003;">
+  <div id="modal" class="c-Modal-container" role="dialog">
+    <div class="c-Modal-container--inner u-w-auto">
+      <div class="c-Modal-body" [ngClass]="{'c-Modal-err': options.type === 'apiError','c-Modal-info': options.type === 'info'}">
+        <h3 *ngIf="options.type === 'apiError'" class="c-Modal-title c-Modal-title--icon u-text-red u-mb-sm"><i class="c-icon icon-report_problem"></i>エラー</h3>
+        <div class="c-Modal-header" *ngIf="options.title">
+          <h3 class="c-Modal-title">{{options.title}}</h3>
+        </div>
+        <p *ngIf="options.content" class="{{options.textAlign !== 'center' || 'u-text-center'}}"
+          [innerHTML]="options.content"
+          [ngClass]="{'u-mb-md': options.cancelText || options.okText || options.deleteText, 'u-text-red': options.type === 'apiError' || options.type === 'error' }">
+        </p>
+        <div class="u-text-center" [ngClass]="{'u-mt-lg': options.deleteText}"
+          *ngIf="options.cancelText || options.okText || options.deleteText">
+          <cpButton *ngIf="options.okText" btnClass="{{options.okBtnClass}}" titleName="{{options.okText}}"
+            (click)="options.ok()"></cpButton>
+          <cpButton *ngIf="options.deleteText" btnClass="{{options.deleteBtnClass}}" titleName="{{options.deleteText}}"
+            (click)="options.ok()"></cpButton>
+          <cpButton *ngIf="options.cancelText" btnClass="{{options.cancelBtnClass}}" titleName="{{options.cancelText}}"
+            (click)="options.cancel()"></cpButton>
+        </div>
+      </div>
+
+      <cpButton *ngIf="options.type !== 'ing'" btnClass="c-Modal_close_btn" titleName="×" (click)="options.onHidden()">
+      </cpButton>
+    </div>
+  </div>
+  <div class="c-Modal-overlay" [ngClass]="{'c-Modal-noOverlay': !options.isOverlay}" (click)="clickHidden()" [ngStyle]="{'display': modalDisp && 'block'}"></div>
+</div>

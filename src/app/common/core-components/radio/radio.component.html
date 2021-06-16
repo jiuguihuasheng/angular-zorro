@@ -1,0 +1,9 @@
+
+<ng-template [ngIf]="validRole">
+    <input [ngClass]="inputClass" id="{{key}}" name="{{radioName}}" value="{{dataValue}}" [(ngModel)]="value"  type="radio"
+    [disabled]="disabled">
+    <label [ngClass]="labelClass" for="{{key}}" (click)="toggle(key)">{{label}}</label>
+</ng-template>
+<ng-template [ngIf]="!validRole && label">
+    <label >{{label}}</label>
+</ng-template>

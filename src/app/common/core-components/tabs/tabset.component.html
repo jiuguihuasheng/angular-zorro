@@ -1,0 +1,17 @@
+<div [ngClass]="firDivClass">
+    <div [ngClass]="secDivClass">
+      <ul class="c-Tab__thumb" [ngClass]="classMap" (click)="$event.preventDefault()">
+        <li *ngFor="let tabz of tabs; let i = index" [ngClass]="['c-Tab__thumb-item', tabz.customClass || '']"
+            [class.active]="tabz.active" [class.disabled]="tabz.disabled" (keydown)="keyNavActions($event, i)"
+             [attr.id]="tabz.id ? tabz.id + '-link' : ''"
+             (click)="tabz.active = true">
+            <span [ngTransclude]="tabz.headingRef">{{ tabz.heading }}</span>
+            <span *ngIf="tabz.removable" (click)="$event.preventDefault(); removeTab(tabz);" class="bs-remove-tab"> &#10060;</span>
+        </li>
+      </ul>
+      <span class="c-Tab__thumb-scroll--btn"></span> 
+    </div>
+</div>
+<div class="tab-content">
+  <ng-content></ng-content>
+</div>

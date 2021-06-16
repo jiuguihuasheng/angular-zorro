@@ -1,0 +1,33 @@
+.btn-disabled {
+  pointer-events: none;
+}
+
+.u-ml-02 {
+  margin-left: 0.2rem !important;
+}
+
+.u-mr-02 {
+  margin-right: 0.2rem !important;
+}
+
+div.c-Tooltip__tip-body {
+  white-space: pre-line;
+}
+
+.datepicker {
+  z-index: 20050; }
+
+.inputOverflow {
+  overflow: hidden;
+}
+  
+.c-Modal-title.c-Modal-title--icon {
+  display: flex;
+  align-items: center;
+  border: none;
+}
+
+.c-Modal-title.c-Modal-title--icon > .c-icon {
+  font-size: 1.8em;
+  flex: 0 0 1.2em;
+}

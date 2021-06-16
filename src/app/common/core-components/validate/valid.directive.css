@@ -1,0 +1,87 @@
+.cp-tooltip {
+  position: absolute;
+  display: none;
+  padding: .25em .5em;
+  max-width: 25em;
+  min-width: 12.5em;
+}
+
+.cp-tooltip.cp-tooltip-right,
+.cp-tooltip.cp-tooltip-left {
+  padding: 0 .25em;
+}
+
+.cp-tooltip.cp-tooltip-top,
+.cp-tooltip.cp-tooltip-bottom {
+  padding: .25em 0;
+}
+
+.cp-tooltip .cp-tooltip-text {
+  padding: .125em .5em;
+  background-color: #dc3545;
+  color: #ffffff;
+  white-space: pre-line;
+  border: 1px solid #dc3545;
+  border-radius: .3rem;
+}
+
+.cp-tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.cp-tooltip-right .cp-tooltip-arrow {
+  top: 50%;
+  left: 0;
+  margin-top: -.25em;
+  border-width: .25em .25em .25em 0;
+  border-right-color: #dc3545;
+}
+
+.cp-tooltip-left .cp-tooltip-arrow {
+  top: 50%;
+  right: 0;
+  margin-top: -.25em;
+  border-width: .25em 0 .25em .25em;
+  border-left-color: #dc3545;
+}
+
+.cp-tooltip.cp-tooltip-top {
+  padding: .25em 0;
+}
+
+.cp-tooltip-top .cp-tooltip-arrow {
+  bottom: 0;
+  left: 50%;
+  margin-left: -.25em;
+  border-width: .25em .25em 0;
+  border-top-color: #dc3545;
+}
+
+.cp-tooltip-bottom .cp-tooltip-arrow {
+  top: 0;
+  left: 50%;
+  margin-left: -.25em;
+  border-width: 0 .25em .25em;
+  border-bottom-color: #dc3545;
+}
+
+.invalid {
+  border:1px solid #dc3545 !important;
+}
+
+/* .valid {
+  border:1px solid #28a745 !important;
+} */
+
+.c-Tooltip__wrap.invalid {
+  border: 1px solid #db3856;
+  background: rgba(204, 51, 51, 0.3);
+}
+
+.c-Tooltip__wrap_valid.invalid {
+  background: rgba(204, 51, 51, 0.3);
+}

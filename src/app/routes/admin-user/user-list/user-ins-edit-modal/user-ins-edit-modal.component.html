@@ -1,0 +1,145 @@
+<div class="c-Modal-wrap" *ngIf="visible" #modal cpOverLayModal [component]="modal"  [visible]="visible">
+  <div id="modalCreate" class="c-Modal-container" role="dialog">
+    <div class="c-Modal-container--inner {{flag==='edit'? 'u-w-md' : 'u-w-auto'}}">
+      <div class="c-Modal-body" #userCreateEditForm="customValidation" cpValidate [rules]="userCreateEditRules">
+        <div class="c-Modal-header">
+          <h3 class="c-Modal-title">アカウント情報を入力</h3>
+        </div>
+        <ng-container *ngIf="authInfoService.authsCheck([role.DAP_LEADCONTRACTOR])">
+        <dl class="c-List__dl-table is-single u-w-md is-has--colspan01">
+          <dt class="c-List__dl-th">アカウント名</dt>
+          <dd class="c-List__dl-td"><input nz-input nzSize="small" [(ngModel)]="data.name"
+              placeholder="例：田中太郎" name="userName" cpValid></dd>
+
+          <dt class="c-List__dl-th">生年月日</dt>
+          <dd class="c-List__dl-td">
+            <nz-date-picker nzSize="small" nzFormat="yyyy/MM/dd" [(ngModel)]="data.birthDate" (ngModelChange)="birthDateChange()" name="birthDate" cpValid></nz-date-picker>
+          </dd>
+          <dt class="c-List__dl-th">権限</dt>
+          <dd class="c-List__dl-td">
+            <div class="c-Tooltip__wrap_valid" name="authority" cpValid [isTableCell]="true">
+              <ng-container *ngFor="let item of permissionList;let i=index">
+                <div class="c-Display__flex-wrap">
+                  <label nz-checkbox [(ngModel)]="item.checked" (ngModelChange)="checkboxChange($event)"
+                  [nzDisabled]="data.userId === userInfoService.userInfo.userId && item.code === role.DAP_LEADCONTRACTOR"
+                  >{{item.name}}</label>
+                </div>
+              </ng-container>
+            </div>
+          </dd>
+
+          <dt class="c-List__dl-th">メールアドレス</dt>
+          <dd class="c-List__dl-td"><input nz-input nzSize="small" placeholder="例：example@mail.com"
+              [(ngModel)]="data.mail" name="userEmail" cpValid>
+          </dd>
+
+          <dt class="c-List__dl-th">電話番号</dt>
+          <dd class="c-List__dl-td"><input nz-input nzSize="small" placeholder="例：09012345678"
+              [(ngModel)]="data.phone" name="phone" cpValid></dd>
+        </dl>
+      </ng-container>
+        <p class="u-text-bold">通知設定</p>
+        <dl class="c-List__dl-table is-single u-w-md is-has--colspan01">
+          <dt class="c-List__dl-th">事故発報
+            <span nz-tooltip nzTooltipTitle="通知タイミング：即時" class="c-Tooltip"></span>
+          </dt>
+          <dd class="c-List__dl-td" name="accident">
+            <nz-radio-group [(ngModel)]="data.accident">
+              <label nz-radio nzValue="{{universalCode.notifySettingOn}}">ON</label>
+              <label nz-radio nzValue="{{universalCode.notifySettingOff}}">OFF</label>
+            </nz-radio-group>
+          </dd>
+          <dt class="c-List__dl-th is-short">急操作
+            <span nz-tooltip nzTooltipTitle="通知タイミング：1日まとめて" class="c-Tooltip"></span>
+          </dt>
+          <dd class="c-List__dl-td is-parent">
+            <dl class="c-List__dl-table is-single is-child">
+              <dt class="c-List__dl-th">急アクセル大</dt>
+              <dd class="c-List__dl-td">
+                <nz-radio-group [(ngModel)]="data.suddenOperation.suddenAcceleration">
+                  <label nz-radio nzValue="{{universalCode.notifySettingOn}}">ON</label>
+                  <label nz-radio nzValue="{{universalCode.notifySettingOff}}">OFF</label>
+                </nz-radio-group>
+              </dd>
+              <dt class="c-List__dl-th">急ブレーキ大</dt>
+              <dd class="c-List__dl-td">
+                <nz-radio-group [(ngModel)]="data.suddenOperation.suddenBraking">
+                  <label nz-radio nzValue="{{universalCode.notifySettingOn}}">ON</label>
+                  <label nz-radio nzValue="{{universalCode.notifySettingOff}}">OFF</label>
+                </nz-radio-group>
+              </dd>
+              <dt class="c-List__dl-th">急ハンドル大</dt>
+              <dd class="c-List__dl-td">
+                <nz-radio-group [(ngModel)]="data.suddenOperation.suddenHandle">
+                  <label nz-radio nzValue="{{universalCode.notifySettingOn}}">ON</label>
+                  <label nz-radio nzValue="{{universalCode.notifySettingOff}}">OFF</label>
+                </nz-radio-group>
+              </dd>
+            </dl>
+          </dd>
+          <dt class="c-List__dl-th is-short">危険挙動
+            <span nz-tooltip nzTooltipTitle="通知タイミング：1日まとめて" class="c-Tooltip"></span>
+          </dt>
+          <dd class="c-List__dl-td is-parent">
+            <dl class="c-List__dl-table is-single is-child">
+              <dt class="c-List__dl-th">わき見</dt>
+              <dd class="c-List__dl-td">
+                <nz-radio-group [(ngModel)]="data.dangerousBehavior.aside">
+                  <label nz-radio nzValue="{{universalCode.notifySettingOn}}">ON</label>
+                  <label nz-radio nzValue="{{universalCode.notifySettingOff}}">OFF</label>
+                </nz-radio-group>
+              </dd>
+            </dl>
+          </dd>
+          <dt class="c-List__dl-th is-short">危険運転
+            <span nz-tooltip nzTooltipTitle="通知タイミング：1日まとめて" class="c-Tooltip"></span>
+          </dt>
+          <dd class="c-List__dl-td is-parent">
+            <dl class="c-List__dl-table is-single is-child">
+              <dt class="c-List__dl-th">片寄り走行</dt>
+              <dd class="c-List__dl-td">
+                <nz-radio-group [(ngModel)]="data.dangerousDriving.sideTracking">
+                  <label nz-radio nzValue="{{universalCode.notifySettingOn}}">ON</label>
+                  <label nz-radio nzValue="{{universalCode.notifySettingOff}}">OFF</label>
+                </nz-radio-group>
+              </dd>
+              <dt class="c-List__dl-th">前方車両接近</dt>
+              <dd class="c-List__dl-td">
+                <nz-radio-group [(ngModel)]="data.dangerousDriving.approachingAhead">
+                  <label nz-radio nzValue="{{universalCode.notifySettingOn}}">ON</label>
+                  <label nz-radio nzValue="{{universalCode.notifySettingOff}}">OFF</label>
+                </nz-radio-group>
+              </dd>
+            </dl>
+          </dd>
+          <dt class="c-List__dl-th">駐車中衝撃検知
+            <span nz-tooltip nzTooltipTitle="通知タイミング：即時" class="c-Tooltip"></span>
+          </dt>
+          <dd class="c-List__dl-td">
+            <nz-radio-group [(ngModel)]="data.parkingImpact">
+              <label nz-radio nzValue="{{universalCode.notifySettingOn}}">ON</label>
+              <label nz-radio nzValue="{{universalCode.notifySettingOff}}">OFF</label>
+            </nz-radio-group>
+          </dd>
+          <dt class="c-List__dl-th">端末故障検知
+            <span nz-tooltip nzTooltipTitle="通知タイミング：1日まとめて" class="c-Tooltip"></span>
+          </dt>
+          <dd class="c-List__dl-td">
+            <nz-radio-group [(ngModel)]="data.deviceBreakdown">
+              <label nz-radio nzValue="{{universalCode.notifySettingOn}}">ON</label>
+              <label nz-radio nzValue="{{universalCode.notifySettingOff}}">OFF</label>
+            </nz-radio-group>
+          </dd>
+        </dl>
+        <div class="u-w-100 u-mt-md u-text-center">
+          <cpButton *ngIf="flag !== 'edit'" type="button" btnClass="c-Btn__primary c-Btn-lg" titleName="登録"
+            (click)="doEdit($event)"></cpButton>
+          <cpButton *ngIf="flag === 'edit'" type="button" btnClass="c-Btn__primary c-Btn-lg" titleName="保存"
+            (click)="doEdit($event)" [ngClass]="{'btn-disabled': isValidUpd()}" [disabled]="isValidUpd()"></cpButton>
+        </div>
+      </div>
+      <cpButton btnClass="c-Modal_close_btn" titleName="×" (click)="closeModal()" aria-label="閉じる"></cpButton>
+    </div>
+  </div>
+  <div class="c-Modal-overlay" (click)="closeModal()" [ngStyle]="{'display': visible && 'block'}"></div>
+</div>

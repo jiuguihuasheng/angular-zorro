@@ -1,0 +1,211 @@
+<div class="Report">
+  <div class="c-Board ">
+    <div class="c-Board__heading is-row is-sp-wrap">
+      <p class="c-Board__heading-title">
+        <i class="c-icon icon-search"></i>
+        検索条件
+      </p>
+    </div>
+    <div class="test code">
+      <p>Progress: {{progress}}%</p>
+      <p *ngIf="progress >= 100">Done processing {{label}} of Angular zone!</p>
+      <button (click)="processWithinAngularZone()">Process within Angular zone</button>
+      <button (click)="processOutsideOfAngularZone()">Process outside of Angular zone</button>
+    </div>
+    <div class="c-Board__content u-w-100">
+      <div class="c-Board__item--gray">
+        <div id="serchEvent1" class="c-Table__search">
+          <div #userSearchForm="customValidation" cpValidate [rules]="userSearchRules">
+          <table>
+            <tbody>
+              <tr>
+                <th>アカウント名</th>
+                <td>
+                  <input nz-input nzSize="small" placeholder="例：田中太郎" [(ngModel)]="searchForm.name" (change)="searchChange()" name="name" cpValid />
+                </td>
+                <ng-container>
+                  <th>権限</th>
+                  <td>
+                    <div class="c-Display__flex-wrap">
+                      <ng-container *ngFor="let item of permissionList;let i=index">
+                        <div>
+                          <label nz-checkbox [(ngModel)]="item.checked" (ngModelChange)="searchChange()">{{item.name}}</label>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </td>
+                </ng-container>
+              </tr>
+              <tr>
+                <th>顔識別情報登録状況</th>
+                <td>
+                  <nz-select nzSize="small" [(ngModel)]="searchForm.faceInfo" (ngModelChange)="searchChange()">
+                    <nz-option nzValue="" nzLabel="--顔情報を選択--"></nz-option>
+                    <nz-option *ngFor="let opt of faceList" nzValue="{{opt.code}}" nzLabel="{{opt.name}}"></nz-option>
+                  </nz-select>
+                </td>
+              </tr>
+              <tr>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+          <div class="c-Col-row u-mt-sm">
+            <cpButton type="button" class="u-ml-auto" btnClass="c-Btn__primary u-ml-auto c-Btn-lg" titleName="検索"
+              (click)="doSearch($event)"></cpButton>
+            <cpButton type="button" class="u-ml-auto" btnClass="c-Btn__default u-ml-auto" titleName="クリア"
+              (click)="doClear()"></cpButton>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="c-Board">
+    <div class="c-Board__content">
+      <div class="c-Col-row u-mt-sm u-mb-sm">
+        <div>
+          <cpButton position="left" type="button" btnClass="c-Btn__primary u-my-sm u-mr-sm"
+            [ngClass]="{'btn-disabled': !isSearch || (checkUserList() && !checkedAll)}"
+            [disabled]="!isSearch || (checkUserList() && !checkedAll)" btnIcon="c-icon icon-get_app"
+            titleName="ユーザー情報ダウンロード" (click)="download()"></cpButton>
+          <cpButton type="button" btnClass="c-Btn__primary u-my-sm c-Btn-lg u-mr-sm"
+          [authRole]="[role.DAP_LEADCONTRACTOR]" titleName="登録" (click)="toInsert($event)">
+          </cpButton>
+        </div>
+        <cpButton [authRole]="[role.DAP_LEADCONTRACTOR]" type="button" class="u-ml-auto u-ptb-08" btnClass="c-Btn__delete u-ml-auto u-mb-sm"
+          [ngClass]="{'btn-disabled': !isSearch || (checkUserList() && !checkedAll)}"
+          [disabled]="!isSearch || (checkUserList() && !checkedAll)"
+           titleName="一括削除" (click)="doDelete($event)">
+        </cpButton>
+      </div>
+      <div class="c-Table__result c-Display__hidden-pc">
+        <nz-table
+          #rowSelectionTable
+          nzShowPagination
+          nzShowSizeChanger
+          [nzFrontPagination]="false"
+          [nzTotal]="totalRecords"
+          [nzShowTotal]="rangeTemplate"
+          [nzData]="allDatas"
+          [nzPageIndex]="currentPage"
+          [nzPageSize]="itemPerPage"
+          (nzPageSizeChange)="itemPerPageChange($event)"
+          (nzPageIndexChange)="pageChangedClick({page: $event, itemsPerPage: itemPerPage})"
+        >
+          <thead>
+            <tr>
+              <th nzShowCheckbox [nzChecked]="checkedAll" [nzDisabled]="!isSearch || allDatas.length === 0" (nzCheckedChange)="checkAll($event)"></th>
+              <th>アカウントID</th>
+              <th>アカウント名</th>
+              <th>権限</th>
+              <th>顔識別情報登録状況</th>
+              <th>メールアドレス(登録有無)</th>
+              <th>電話番号</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let rowItem of rowSelectionTable.data">
+              <td
+                nzShowCheckbox
+                [nzChecked]="rowItem.checked"
+                (nzCheckedChange)="onCheckboxClick(rowItem)"
+                [nzDisabled]="checkedAll"
+              ></td>
+              <td (click)="openUserDetail(rowItem)">{{ rowItem.userId }}</td>
+              <td (click)="openUserDetail(rowItem)">{{ rowItem.name }}</td>
+              <td (click)="openUserDetail(rowItem)">{{ setPermissionList(rowItem.permission) }}</td>
+              <td (click)="openUserDetail(rowItem)">{{ helperService.getDefinitionName(faceList, rowItem.faceInfoRegistStatus) }}</td>
+              <td (click)="openUserDetail(rowItem)">{{ helperService.getDefinitionName(mailList, rowItem.mailStatus) }}</td>
+              <td (click)="openUserDetail(rowItem)">{{ rowItem.phone }}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+        <ng-template #rangeTemplate let-range="range" let-total> {{ total }}：{{ range[0] }}-{{ range[1] }}件目を表示</ng-template>
+      </div>
+
+      <div class="c-Display__hidden-tablet">
+        <div class="u-mb-md">
+          <label nz-checkbox [(ngModel)]="checkedAll" (ngModelChange)="checkAll(checkedAll)" [nzDisabled]="!isSearch || allDatas.length===0">全選択</label>
+        </div>
+        <ul class="c-Table__Instead is-split--2">
+          <ng-container *ngIf="allDatas.length===0">{{'message.I000010' | translate}}</ng-container>
+          <li class="c-Table__instead-item" *ngFor="let rowItem of allDatas; let i = index">
+            <div class="c-Table__instead-head">
+              <div class="c-Table__instead-title">
+                <div class="text-white">
+                  <label nz-checkbox [(ngModel)]="rowItem.checked" (ngModelChange)="onCheckboxClick(rowItem)" [nzDisabled]="checkedAll || rowItem.userId === userInfoService.userInfo.userId">{{rowItem.name}}</label>
+                </div>
+                <ng-container *ngIf="!authInfoService.authsCheck([role.DAP_LEADCONTRACTOR])">
+                  {{rowItem.name}}
+                </ng-container>
+                <a  href="javascript:void(0);" class="c-Btn__default c-Btn-sm" (click)="openUserDetail(rowItem)">個別詳細</a>
+              </div>
+            </div>
+            <div class="c-Table__instead-body">
+              <ul class="c-Table__instead-list">
+                <li class="c-Table__instead-list-item">
+                  <div class="c-Table__instead-list--label">アカウントID</div>
+                  <div class="c-Table__instead-list--item">
+                    <p class="c-Table__instead-list--text">{{rowItem.userId}}
+                    </p>
+                  </div>
+                </li>
+                <li class="c-Table__instead-list-item">
+                  <div class="c-Table__instead-list--label">権限</div>
+                  <div class="c-Table__instead-list--item">
+                    <p class="c-Table__instead-list--text">
+                      {{setPermissionList(rowItem.permission)}}
+                    </p>
+                  </div>
+                </li>
+                <li class="c-Table__instead-list-item">
+                  <div class="c-Table__instead-list--label">顔識別情報登録状況</div>
+                  <div class="c-Table__instead-list--item">
+                    <p class="c-Table__instead-list--text">
+                      {{helperService.getDefinitionName(faceList, rowItem.faceInfoRegistStatus)}}
+                    </p>
+                  </div>
+                </li>
+                <li class="c-Table__instead-list-item">
+                  <div class="c-Table__instead-list--label">メールアドレス(登録有無)</div>
+                  <div class="c-Table__instead-list--item">
+                    <p class="c-Table__instead-list--text">{{helperService.getDefinitionName(mailList, rowItem.mailStatus)}}</p>
+                  </div>
+                </li>
+                <li class="c-Table__instead-list-item">
+                  <div class="c-Table__instead-list--label">電話番号</div>
+                  <div class="c-Table__instead-list--item">
+                    <p class="c-Table__instead-list--text">{{rowItem.phone}}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+        <nz-pagination
+          [nzResponsive]="true"
+          [nzPageIndex]="currentPage"
+          [nzTotal]="totalRecords"
+          [nzPageSize]="itemPerPage"
+          [nzShowTotal]="rangeTemplate"
+          (nzPageSizeChange)="itemPerPageChange($event)"
+          (nzPageIndexChange)="pageChangedClick({page: $event, itemsPerPage: itemPerPage})"
+        ></nz-pagination>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- モーダル: 作成 -->
+<ng-template [ngIf]="userInsEditModalVis">
+  <user-ins-edit-modal [(visible)]="userInsEditModalVis" flag="ins" (insEditDataChange)="insDataChange($event)"></user-ins-edit-modal>
+</ng-template>
+
+<!-- モーダル: 個別詳細 -->
+<ng-template [ngIf]="userDetailModalVis">
+  <user-detail-modal [(visible)]="userDetailModalVis" [userId]="detailUserId" [isHeaderMenuClick]="false"
+    (detailChange)="detailChange($event)"></user-detail-modal>
+</ng-template>

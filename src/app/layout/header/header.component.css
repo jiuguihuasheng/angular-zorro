@@ -1,0 +1,50 @@
+.c-Form__select-wrap {
+  min-width: 160px;
+}
+
+.Header__title {
+  color: white;
+  display: flex;
+  flex-direction: row;
+  flex: 2 1 40%;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1;
+  margin-right: auto;
+}
+
+.Header__content-account:before, .Header__content-period:before, .Header__content-radio:before {
+  justify-content: flex-start;
+  background: hsla(0,0%,100%,.3);
+  content: "";
+  height: 2rem;
+  margin: auto .5rem;
+  width: 1px;
+}
+
+.Header__content-name {
+  max-height: 21px !important;
+}
+
+.Header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #1e3968;
+  color: #fff;
+  height: 4rem;
+  margin-left: auto;
+  padding: .5rem 1rem;
+  z-index: 10;
+  position: fixed;
+  width: 100%;
+}
+
+.Header__content-account {
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 auto;
+  align-items: center;
+}

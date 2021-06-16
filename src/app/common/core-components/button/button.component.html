@@ -1,0 +1,8 @@
+<ng-template [ngIf]="position">
+  <button type="button" [attr.eventId]="eventId" *ngIf="validRole" [ngClass]="{'is-disable': disabled}" [disabled]="disabled" class="{{btnClass}}">
+    <i [ngClass]="btnIcon" *ngIf="position === 'left'"></i>{{ titleName }}<i [ngClass]="btnIcon" *ngIf="position === 'right'"></i>
+  </button>
+</ng-template>
+<ng-template [ngIf]="!position">
+  <button type="button" [attr.eventId]="eventId" *ngIf="validRole"  [ngClass]="{'is-disable': disabled}" class="{{btnClass}}" [disabled]="disabled" [innerHTML]="titleName"></button>
+</ng-template>

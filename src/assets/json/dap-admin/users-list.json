@@ -1,0 +1,120 @@
+{
+  "offset": 0,
+  "limit": 10,
+  "count": 289,
+  "list": [
+    {
+      "userId": "1111",
+      "name": "田中　太郎",
+      "permission": [
+        "05", "06", "07"
+      ],
+      "faceInfoRegistStatus": "01",
+      "mailStatus": "01",
+      "phone": "090-xxxx-xxxx"
+    },
+    {
+      "userId": "2222",
+      "name": "田中　次郎",
+      "faceInfoRegistStatus": "02",
+      "permission": ["06"],
+      "mailStatus": "01",
+      "phone": "090-xxxx-xxxx"
+    },
+    {
+      "userId": "3333",
+      "name": "田中　三郎",
+      "faceInfoRegistStatus": "02",
+      "permission": ["06"],
+      "mailStatus": "01",
+      "mail": "xxx@xxxx.xxxx",
+      "phone": "090-xxxx-xxxx"
+    },
+    {
+      "userId": "4444",
+      "name": "田中　四郎",
+      "faceInfoRegistStatus": "02",
+      "permission": ["06"],
+      "mailStatus": "01",
+      "mail": "xxx@xxxx.xxxx",
+      "phone": "090-xxxx-xxxx"
+    },
+    {
+      "userId": "5555",
+      "name": "田中　五郎",
+      "faceInfoRegistStatus": "02",
+      "permission": ["06"],
+      "mailStatus": "01",
+      "mail": "xxx@xxxx.xxxx",
+      "phone": "090-xxxx-xxxx"
+    },
+    {
+      "userId": "6666",
+      "name": "田中　六郎",
+      "faceInfoRegistStatus": "01",
+      "permission": ["05"],
+      "mailStatus": "01",
+      "mail": "xxx@xxxx.xxxx",
+      "phone": "090-xxxx-xxxx"
+    },
+    {
+      "userId": "7777",
+      "name": "田中　七郎",
+      "faceInfoRegistStatus": "02",
+      "permission": ["07"],
+      "mailStatus": "01",
+      "mail": "xxx@xxxx.xxxx",
+      "phone": "090-xxxx-xxxx"
+    },
+    {
+      "userId": "8888",
+      "name": "田中　八郎",
+      "permission": [
+        "家族ドライバー"
+      ],
+      "faceInfo": "設定済み",
+      "mailSet": "登録済み",
+      "mail": "xxx@xxxx.xxxx",
+      "phone": "090-xxxx-xxxx"
+    },
+    {
+      "userId": "9999",
+      "organization": [
+        "A株式会社",
+        "本店",
+        "営業２部",
+        "営業２室",
+        "営業１課",
+        "チームＢ"
+      ],
+      "name": "田中　九郎",
+      "permission": [
+        "組織ドライバー",
+        "筆頭契約者"
+      ],
+      "faceInfo": "未",
+      "mailSet": "未登録",
+      "mail": "xxx@xxxx.xxxx",
+      "phone": "090-xxxx-xxxx"
+    },
+    {
+      "userId": "10000",
+      "organization": [
+        "A株式会社",
+        "本店",
+        "営業２部",
+        "営業２室",
+        "営業１課",
+        "チームＢ"
+      ],
+      "name": "田中　十郎",
+      "permission": [
+        "家族ドライバー"
+      ],
+      "faceInfo": "未",
+      "mailSet": "未登録",
+      "mail": "xxx@xxxx.xxxx",
+      "phone": "090-xxxx-xxxx"
+    }
+  ]
+}

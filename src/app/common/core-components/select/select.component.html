@@ -1,0 +1,9 @@
+<select [ngClass]="selectClass" name="selectId" [(ngModel)]="value"
+[disabled]="disabled">
+  <ng-template [ngIf]="optionTemplate">
+    <ng-container *ngTemplateOutlet="optionTemplate"></ng-container>
+  </ng-template>
+  <ng-template [ngIf]="!optionTemplate && datas">
+    <option *ngFor="let item of datas" value="{{item.code}}">{{item.name}}</option>
+  </ng-template>
+</select>

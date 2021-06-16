@@ -1,0 +1,20 @@
+<!-- <div class="table-wrapper"> -->
+  <cp-pagination [totalItems]="totalRecords" [boundaryLinks]="boundaryLinks" [(ngModel)]="currentPage" [paginator]="paginator"
+    (pageChanged)="doPageChange($event)" [itemsPerPage]="rows" [maxSize]="pageMaxSize" (numPages)="smallnumPages = $event"
+    [previousText]="previousText"  [lastText]="lastText" *ngIf="paginator && (paginatorPosition==='top' || paginatorPosition=='both' )"
+    [btnTemplate]="btnTemplate" [disabled]="pageDisabled" [classPage]="tablePageStyleClass" [classPageBtn]="tablePageBtnStyleClass">
+  </cp-pagination>
+  <!-- class="table tableMinWidth table-heading-color mt-2 list-table" -->
+  <table #table [ngClass]="tableStyleClass" [ngStyle]="tableStyle">
+    <thead [ngClass]="tableTheadStyleClass">
+      <ng-container *ngTemplateOutlet="headerTemplate; context: {$implicit: columns}"></ng-container>
+    </thead>
+    <tbody [ngClass]="tableTbodyStyleClass" cpTableBody [template]="bodyTemplate" [columns]="columns"></tbody>
+    <tfoot cpTableFooter [template]="footerTemplate"></tfoot>
+  </table>
+  <cp-pagination [paginator]="paginator" [totalItems]="totalRecords" [boundaryLinks]="boundaryLinks" [(ngModel)]="currentPage"
+    (pageChanged)="doPageChange($event)" [itemsPerPage]="rows" [maxSize]="pageMaxSize" (numPages)="smallnumPages = $event"
+    [previousText]="previousText"  [lastText]="lastText" [btnTemplate]="btnTemplate" [disabled]="pageDisabled"
+    *ngIf="paginator && (paginatorPosition==='bottom' || paginatorPosition=='both' ) " [classPage]="tablePageStyleClass"  [classPageBtn]="tablePageBtnStyleClass">
+  </cp-pagination>
+<!-- </div> -->

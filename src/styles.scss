@@ -1,0 +1,29 @@
+@import "./assets/dap/iconfont/style.css";
+@import "./assets/dap/css/reset.css";
+@import "./assets/dap/css/styles.css";
+@import "./assets/dap/css/loading.css";
+@import "app/app.component.css";
+@import "app/common/core-components/validate/valid.directive.css";
+.cdk-overlay-container {
+  z-index: 99999;
+}
+
+.ant-layout-sider-children {
+  position: fixed;
+  top: 0;
+  background-color: #3F6C9D;
+  width: inherit;
+}
+
+.ant-menu-dark .ant-menu-sub, .ant-menu.ant-menu-dark, .ant-menu.ant-menu-dark .ant-menu-sub {
+  background-color: #689acf;
+  color: #fff;
+}
+
+.ant-layout-header {
+  height: 56px;
+}
+
+.ant-menu-submenu-open {
+  color: #fff !important;
+}

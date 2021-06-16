@@ -1,0 +1,124 @@
+<div class="c-Modal-wrap" *ngIf="visible" #modalInfo cpOverLayModal [component]="modalInfo"  [visible]="visible">
+  <div id="modalInfo" class="c-Modal-container" role="dialog">
+    <div class="c-Modal-container--inner u-w-md">
+
+      <div class="c-Modal-body">
+        <div class="c-Modal-header">
+          <h3 class="c-Modal-title" *ngIf="!isHeaderMenuClick">個別詳細</h3>
+          <h3 class="c-Modal-title" *ngIf="isHeaderMenuClick">アカウント情報詳細</h3>
+        </div>
+        <dl class="c-List__dl-table is-single is-has--colspan01 u-mb-sm ">
+          <dt class="c-List__dl-th">アカウントID</dt>
+          <dd class="c-List__dl-td">{{data.userId}}</dd>
+          <dt class="c-List__dl-th">権限</dt>
+          <dd class="c-List__dl-td">
+          <ng-container *ngIf=" data.permission &&  data.permission.length > 0">
+          {{setPermissionList(data.permission)}}
+          </ng-container>
+          </dd>
+          <dt class="c-List__dl-th">アカウント名</dt>
+          <dd class="c-List__dl-td">{{data.name || ''}}</dd>
+          <dt class="c-List__dl-th">生年月日</dt>
+          <dd class="c-List__dl-td">{{(data.birthDate | formatDateBr: 'YYYY/MM/DD') || ''}}</dd>
+          <dt class="c-List__dl-th">メールアドレス</dt>
+          <dd class="c-List__dl-td">{{data.mail || ''}}</dd>
+          <dt class="c-List__dl-th">電話番号</dt>
+          <dd class="c-List__dl-td">{{data.phone || ''}}</dd>
+          <dt class="c-List__dl-th">顔識別情報登録状況</dt>
+          <dd class="c-List__dl-td">
+            {{data.faceInfoRegistStatus ? helperService.getDefinitionName(faceList, data.faceInfoRegistStatus) : ''}}
+          </dd>
+
+        </dl>
+
+        <p class="u-text-bold">通知設定</p>
+        <dl class="c-List__dl-table is-single is-has--colspan01 u-mb-sm ">
+          <dt class="c-List__dl-th">事故発報
+            <span nz-tooltip nzTooltipTitle="通知タイミング：即時" class="c-Tooltip"></span>
+          </dt>
+          <dd class="c-List__dl-td">{{data.accident ? helperService.getDefinitionName(notifySetting, data.accident) : ''}}</dd>
+          <dt class="c-List__dl-th is-short">急操作
+            <span nz-tooltip nzTooltipTitle="通知タイミング：1日まとめて" class="c-Tooltip"></span>
+          </dt>
+          <dd class="c-List__dl-td is-parent">
+            <dl class="c-List__dl-table is-single is-child">
+              <dt class="c-List__dl-th">急アクセル大</dt>
+              <dd class="c-List__dl-td">{{data.suddenOperation?.suddenAcceleration ? helperService.getDefinitionName(notifySetting, data.suddenOperation.suddenAcceleration) : ''}}</dd>
+              <dt class="c-List__dl-th">急ブレーキ大</dt>
+              <dd class="c-List__dl-td">{{ data.suddenOperation?.suddenBraking ? helperService.getDefinitionName(notifySetting, data.suddenOperation.suddenBraking) : ''}}</dd>
+              <dt class="c-List__dl-th">急ハンドル大</dt>
+              <dd class="c-List__dl-td">{{data.suddenOperation?.suddenHandle ? helperService.getDefinitionName(notifySetting, data.suddenOperation.suddenHandle) : ''}}</dd>
+            </dl>
+          </dd>
+          <dt class="c-List__dl-th is-short">危険挙動
+            <span nz-tooltip nzTooltipTitle="通知タイミング：1日まとめて" class="c-Tooltip"></span>
+          </dt>
+          <dd class="c-List__dl-td is-parent">
+            <dl class="c-List__dl-table is-single is-child">
+              <dt class="c-List__dl-th">わき見</dt>
+              <dd class="c-List__dl-td">{{data.dangerousBehavior?.aside ? helperService.getDefinitionName(notifySetting, data.dangerousBehavior.aside) : ''}}</dd>
+            </dl>
+          </dd>
+          <dt class="c-List__dl-th is-short">危険運転
+            <span nz-tooltip nzTooltipTitle="通知タイミング：1日まとめて" class="c-Tooltip"></span>
+          </dt>
+          <dd class="c-List__dl-td is-parent">
+            <dl class="c-List__dl-table is-single is-child">
+              <dt class="c-List__dl-th">片寄り走行</dt>
+              <dd class="c-List__dl-td">{{data.dangerousDriving?.sideTracking ? helperService.getDefinitionName(notifySetting, data.dangerousDriving.sideTracking) : ''}}</dd>
+              <dt class="c-List__dl-th">前方車両接近</dt>
+              <dd class="c-List__dl-td">{{data.dangerousDriving?.approachingAhead ? helperService.getDefinitionName(notifySetting, data.dangerousDriving.approachingAhead) : ''}}</dd>
+            </dl>
+          </dd>
+          <dt class="c-List__dl-th">駐車中衝撃検知
+            <span nz-tooltip nzTooltipTitle="通知タイミング：即時" class="c-Tooltip"></span>
+          </dt>
+          <dd class="c-List__dl-td">{{data.parkingImpact ? helperService.getDefinitionName(notifySetting, data.parkingImpact) : ''}}</dd>
+          <dt class="c-List__dl-th">端末故障検知
+            <span nz-tooltip nzTooltipTitle="通知タイミング：1日まとめて" class="c-Tooltip"></span>
+          </dt>
+          <dd class="c-List__dl-td">{{data.deviceBreakdown ? helperService.getDefinitionName(notifySetting, data.deviceBreakdown) : ''}}</dd>
+        </dl>
+
+        <p class="u-text-bold">リンク</p>
+        <dl class="c-List__dl-table is-single is-has--colspan01">
+          <dt class="c-List__dl-th">リンク</dt>
+          <dd class="c-List__dl-td">
+            <ul class="c-List">
+              <li class="u-mb-sm">
+                <cp-link childClass="c-Btn__primary c-Btn-sm" label="運転状況概要" (click)="moveClick('/dashboard')"></cp-link>
+              </li>
+              <li>
+                <cp-link childClass="c-Btn__primary c-Btn-sm" label="事故発生・危険挙動一覧"
+                (click)="moveClick('/operation-manager/accident-risk-trip')"></cp-link>
+              </li>
+            </ul>
+          </dd>
+        </dl>
+
+        <div class="u-text-center u-mt-md">
+          <ng-container *ngIf="authInfoService.authsCheck([role.DAP_LEADCONTRACTOR])">
+            <cpButton *ngIf="!isHeaderMenuClick && !ownUser" type="button" btnClass="c-Btn__default"
+              titleName="パスワードリセット" (click)="passwordResetClick()">
+            </cpButton>
+            <cpButton type="button" btnClass="c-Btn__default marginL" titleName="編集" (click)="editClick()"></cpButton>
+            <cpButton *ngIf="!isHeaderMenuClick" [ngClass]="{'btn-disabled': ownUser}" [disabled]="ownUser" type="button" btnClass="c-Btn__delete marginL"
+              titleName="削除" (click)="doDelete($event)">
+            </cpButton>
+          </ng-container>
+          <ng-container *ngIf="!authInfoService.authsCheck([role.DAP_LEADCONTRACTOR])">
+            <cpButton *ngIf="isHeaderMenuClick && ownUser" type="button" btnClass="c-Btn__default marginL" titleName="編集" (click)="editClick()"></cpButton>
+          </ng-container>
+        </div>
+      </div>
+      <cpButton btnClass="c-Modal_close_btn" titleName="×" (click)="closeModal()" aria-label="閉じる"></cpButton>
+    </div>
+  </div>
+
+  <div class="c-Modal-overlay" (click)="closeModal()" [ngStyle]="{'display': visible && 'block'}"></div>
+
+</div>
+<!-- モーダル: 編集 -->
+<ng-template [ngIf]="userEditModalVis">
+  <user-ins-edit-modal [(visible)]="userEditModalVis" [userId]="userId" flag="edit" [isHeaderMenuClick]="isHeaderMenuClick" (insEditDataChange)="editDataChange($event)"></user-ins-edit-modal>
+</ng-template>

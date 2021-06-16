@@ -1,0 +1,22 @@
+.nav-tabs {
+  border-bottom: 1px solid #dee2e6;
+}
+.nav-tabs .nav-item {
+  margin-bottom: -1px;
+}
+.nav-tabs .active {
+  background: #005CB9;
+  box-shadow: none;
+  color: #fff;
+  cursor: default;
+}
+.nav-tabs .disabled {
+  background: #E2E4E5;
+  box-shadow: none;
+  color: #000000;
+  cursor: default;
+}
+.c-Tab__panel > .is-active {
+  display: block;
+}
+

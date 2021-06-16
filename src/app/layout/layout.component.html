@@ -1,0 +1,24 @@
+<nz-layout class="layout">
+  <nz-sider nzCollapsible nzWidth="140px">
+    <div class="logo"><img src="assets/dap/images/logo.png" alt="ドライブエージェントパーソナル　ロゴ"></div>
+    <ul nz-menu nzTheme="dark" nzMode="vertical">
+      <li nz-submenu nzTitle="各種設定" nzIcon="setting">
+        <ul>
+          <li nz-menu-item route="/admin/user/user-list" [nzSelected]="globals.currentActiveRoute === '/admin/user/user-list'">
+            <i nz-icon nzType="user" nzTheme="outline"></i>
+            <span>ユーザー一覧</span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header><app-header [menuRight]="menuRight"></app-header></nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+    <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
+  </nz-layout>
+</nz-layout>

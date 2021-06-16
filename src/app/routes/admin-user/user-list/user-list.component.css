@@ -1,0 +1,12 @@
+.u-ptb-08 >>> button {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.text-white >>> span {
+  color: #fff;
+}
+
+nz-select {
+  width: 100%;
+}

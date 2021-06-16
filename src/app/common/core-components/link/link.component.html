@@ -1,0 +1,14 @@
+<ng-container *ngIf="type === 'a'">
+  <a [route]="route" [params]="params" [isMenuClick]="isMenuClick" [ngClass]="childClass" [ngStyle]="style" *ngIf="validRole && label" cpLink navigation>
+    <ng-template [ngIf]="linkTemplate">
+      <ng-container *ngTemplateOutlet="linkTemplate"></ng-container>
+    </ng-template>
+    <ng-template [ngIf]="!linkTemplate">
+      {{label}}
+    </ng-template>
+  </a>
+</ng-container>
+<ng-container *ngIf="type === 'span'">
+  <span [route]="route" [params]="params" [ngClass]="childClass" [ngStyle]="style" *ngIf="validRole && label"
+    cpLink navigation>{{label}}</span>
+</ng-container>

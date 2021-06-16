@@ -1,0 +1,25 @@
+{
+  "userId": "1111",
+  "birthDate": "20000609",
+  "name": "田中太郎",
+  "permission": ["05", "06", "07"],
+  "faceInfoRegistStatus": "01",
+  "phone": "xxx-xxxx-xxxx",
+  "mail": "01",
+  "lastUpdateTime": "20200825163712",
+  "accident": "01",
+  "suddenOperation": {
+    "suddenAcceleration": "01",
+    "suddenBraking": "01",
+    "suddenHandle": "01"
+  },
+  "dangerousBehavior": {
+    "aside": "02"
+  },
+  "dangerousDriving": {
+    "sideTracking": "02",
+    "approachingAhead": "02"
+  },
+  "parkingImpact": "01",
+  "deviceBreakdown": "02"
+}
